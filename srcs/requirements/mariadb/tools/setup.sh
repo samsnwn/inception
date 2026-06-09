@@ -9,11 +9,6 @@ chown -R mysql:mysql /run/mysqld /var/lib/mysql || true
 # Start the server temporarily to apply idempotent provisioning statements.
 service mariadb start || true
 
-DB_NAME=thedatabase
-DB_USER=theuser
-DB_PASSWORD=abc
-DB_PASS_ROOT=123
-
 # Idempotent SQL: safe to run on every container start.
 mariadb -v -u root << EOF
 CREATE DATABASE IF NOT EXISTS $DB_NAME;
