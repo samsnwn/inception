@@ -1,73 +1,73 @@
-services:
-  mariadb:
-    container_name: mariadb
-    build:
-      context: ./requirements/mariadb
-    env_file:
-      - .env
-    volumes:
-      - database:/var/lib/mysql
-    networks:
-      - all
-    restart: unless-stopped
+# services:
+#   mariadb:
+#     container_name: mariadb
+#     build:
+#       context: ./requirements/mariadb
+#     env_file:
+#       - .env
+#     volumes:
+#       - database:/var/lib/mysql
+#     networks:
+#       - all
+#     restart: unless-stopped
 
-  wordpress:
-    container_name: wordpress
-    build:
-      context: ./requirements/wordpress
-    volumes:
-      - wordpress_files:/var/www/inception
-    networks:
-      - all
-    init: true
-    restart: on-failure
-    env_file:
-      - .env
-    depends_on:
-      - mariadb
+#   wordpress:
+#     container_name: wordpress
+#     build:
+#       context: ./requirements/wordpress
+#     volumes:
+#       - wordpress_files:/var/www/inception
+#     networks:
+#       - all
+#     init: true
+#     restart: on-failure
+#     env_file:
+#       - .env
+#     depends_on:
+#       - mariadb
 
-  nginx:
-    container_name: nginx
-    build:
-      context: ./requirements/nginx
-      args:
-        CERT_FOLDER: ${CERT_FOLDER}
-        CERTIFICATE: ${CERTIFICATE}
-        KEY: ${KEY}
-        COUNTRY: ${COUNTRY}
-        STATE: ${STATE}
-        LOCALITY: ${LOCALITY}
-        ORGANIZATION: ${ORGANIZATION}
-        UNIT: ${UNIT}
-        COMMON_NAME: ${COMMON_NAME}
-    ports:
-      - "8443:443"
-    volumes:
-      - wordpress_files:/var/www/inception
-    networks:
-      - all
-    init: true
-    restart: on-failure
-    env_file:
-      - .env
-    depends_on:
-      - wordpress
+#   nginx:
+#     container_name: nginx
+#     build:
+#       context: ./requirements/nginx
+#       args:
+#         CERT_FOLDER: ${CERT_FOLDER}
+#         CERTIFICATE: ${CERTIFICATE}
+#         KEY: ${KEY}
+#         COUNTRY: ${COUNTRY}
+#         STATE: ${STATE}
+#         LOCALITY: ${LOCALITY}
+#         ORGANIZATION: ${ORGANIZATION}
+#         UNIT: ${UNIT}
+#         COMMON_NAME: ${COMMON_NAME}
+#     ports:
+#       - "8443:443"
+#     volumes:
+#       - wordpress_files:/var/www/inception
+#     networks:
+#       - all
+#     init: true
+#     restart: on-failure
+#     env_file:
+#       - .env
+#     depends_on:
+#       - wordpress
 
-volumes:
-  database:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/samcasti/data/database
+# volumes:
+#   database:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       o: bind
+#       device: /home/samcasti/data/database
 
-  wordpress_files:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/samcasti/data/wordpress_files
+#   wordpress_files:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       o: bind
+#       device: /home/samcasti/data/wordpress_files
 
-networks:
-  all:
-    driver: bridge
+# networks:
+#   all:
+#     driver: bridge

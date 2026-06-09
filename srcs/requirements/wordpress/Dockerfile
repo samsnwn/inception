@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN mkdir -p /run/php \
     && mkdir -p /var/run/php \
     && mkdir -p /var/www/inception
+RUN ln -sfn /var/www/inception /var/inception
 
 COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY conf/wp-config.php /tmp/wp-config.php
@@ -32,4 +33,5 @@ RUN chown -R www-data:www-data /var/www/inception
 
 WORKDIR /var/www/inception
 
-CMD ["setup.sh"]
+ENTRYPOINT ["/bin/setup.sh"]
+CMD ["php-fpm8.2", "-F"]
