@@ -10,6 +10,12 @@ RUN		apt update && \
 		mariadb-server && \
 		rm -rf /var/lib/apt/lists/*
 
+RUN sed -i 's/bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+# MariaDB needs a writable runtime directory for its socket and pid file.
+RUN		mkdir -p /run/mysqld && \
+		chown -R mysql:mysql /run/mysqld /var/lib/mysql
+
 # Copy config file into container.
 COPY	conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
