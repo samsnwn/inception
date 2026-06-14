@@ -41,7 +41,7 @@ services:
         UNIT: ${UNIT}
         COMMON_NAME: ${COMMON_NAME}
     ports:
-      - "8443:443"
+      - "443:443"
     volumes:
       - wordpress_files:/var/www/inception
     networks:
