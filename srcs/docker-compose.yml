@@ -5,10 +5,15 @@ services:
       context: ./requirements/mariadb
     env_file:
       - .env
+    secrets:
+      - db_password
+      - db_root_password
     volumes:
       - database:/var/lib/mysql
     networks:
       - all
+    expose:
+      - "3306"
     restart: unless-stopped
 
   wordpress:
@@ -17,14 +22,18 @@ services:
       context: ./requirements/wordpress
     volumes:
       - wordpress_files:/var/www/inception
-    networks:
-      - all
-    init: true
-    restart: on-failure
     env_file:
       - .env
+    secrets:
+      - db_password
+      - credentials
     depends_on:
       - mariadb
+    networks:
+      - all
+    expose:
+      - "9000"
+    restart: unless-stopped
 
   nginx:
     container_name: nginx
@@ -46,8 +55,7 @@ services:
       - wordpress_files:/var/www/inception
     networks:
       - all
-    init: true
-    restart: on-failure
+    restart: unless-stopped
     env_file:
       - .env
     depends_on:
@@ -59,15 +67,22 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/samcasti/data/database
-
+      device: ${HOME}/data/database
   wordpress_files:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/samcasti/data/wordpress_files
+      device: ${HOME}/data/wordpress_files
 
 networks:
   all:
     driver: bridge
+
+secrets:
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  credentials:
+    file: ../secrets/credentials.txt
