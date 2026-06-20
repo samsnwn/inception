@@ -2,8 +2,8 @@ NAME		= inception
 COMPOSE		= ./srcs/docker-compose.yml
 HOST_URL	= samcasti.42.fr
 DATA_DIR	= ~/data
-SECRETS_DIR = /secrets
-ENV_DIR	= srcs/.env
+SECRETS_DIR = secrets
+ENV_DIR		= srcs/.env
 
 all: up
 
