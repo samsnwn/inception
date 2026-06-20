@@ -2,6 +2,7 @@ NAME		= inception
 COMPOSE		= ./srcs/docker-compose.yml
 HOST_URL	= samcasti.42.fr
 DATA_DIR	= ~/data
+SECRETS_DIR = /secrets
 
 all: up
 
@@ -14,14 +15,12 @@ up:
 down:
 	@docker compose -p $(NAME) -f $(COMPOSE) down
 
-backup:
-	@if [ -d $(DATA_DIR) ]; then sudo tar -czvf ~/data.tar.gz -C ~/ data/; fi
-
 clean:
 	@docker compose -p $(NAME) -f $(COMPOSE) down -v --rmi all
 
-fclean: clean backup
+fclean: clean
 	@sudo rm -rf $(DATA_DIR)
+	@sudo rm -rf secrets srcs/.env
 	@sudo hostsed rm 127.0.0.1 $(HOST_URL) > /dev/null 2>&1 || true
 	@docker system prune -a --volumes -f
 
@@ -34,4 +33,4 @@ prepare:
 
 re: fclean all
 
-.PHONY: all up down backup clean fclean prepare re
+.PHONY: all up down clean fclean prepare re
