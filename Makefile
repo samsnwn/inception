@@ -24,13 +24,6 @@ fclean: clean
 	@sudo hostsed rm 127.0.0.1 $(HOST_URL) > /dev/null 2>&1 || true
 	@docker system prune -a --volumes -f
 
-prepare:
-	@docker stop $$(docker ps -qa) 2>/dev/null || true
-	@docker rm $$(docker ps -qa) 2>/dev/null || true
-	@docker rmi -f $$(docker images -qa) 2>/dev/null || true
-	@docker volume rm $$(docker volume ls -q) 2>/dev/null || true
-	@docker network rm $$(docker network ls -q) 2>/dev/null || true
-
 re: fclean all
 
-.PHONY: all up down clean fclean prepare re
+.PHONY: all up down clean fclean re
