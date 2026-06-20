@@ -111,6 +111,5 @@ The architecture consists of:
 
 ### Use of AI
 AI assistance was utilized during the development of this project for:
-1.  **Refactoring the configuration scripts:** Optimizing the dynamic creation of credentials within `setup.sh` to securely write secrets to the host's `.gitignore` path.
-2.  **Structuring Makefile targets:** Designing clean rules and removing redundant calls (such as nested `make` targets) for seamless automation.
-3.  **Documentation:** Writing technical comparative sections explaining Docker infrastructure concepts and architectural differences.
+1.  **Documentation:** Writing technical comparative sections explaining Docker infrastructure concepts and architectural differences.
+2. **Research:** Researching main concepts utilized in this project.
