@@ -3,6 +3,7 @@ COMPOSE		= ./srcs/docker-compose.yml
 HOST_URL	= samcasti.42.fr
 DATA_DIR	= ~/data
 SECRETS_DIR = /secrets
+ENV_DIR	= srcs/.env
 
 all: up
 
@@ -20,7 +21,7 @@ clean:
 
 fclean: clean
 	@sudo rm -rf $(DATA_DIR)
-	@sudo rm -rf secrets srcs/.env
+	@sudo rm -rf $(SECRETS_DIR) $(ENV_DIR)
 	@sudo hostsed rm 127.0.0.1 $(HOST_URL) > /dev/null 2>&1 || true
 	@docker system prune -a --volumes -f
 
