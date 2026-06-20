@@ -17,11 +17,6 @@ DB_HOST=mariadb
 
 WP_URL=samcasti.42.fr
 WP_TITLE=Inception
-WP_ADMIN_USER=super
-WP_ADMIN_EMAIL=super@123.com
-WP_USER=sam
-WP_EMAIL=sam@123.com
-WP_ROLE=editor
 WP_FULL_URL=https://samcasti.42.fr
 
 CERT_FOLDER=/etc/nginx/certs
@@ -38,7 +33,7 @@ EOF
 # 2. Create the secrets directory and the password files
 mkdir -p secrets
 
-printf "WP_ADMIN_PASSWORD=%s\nWP_PASSWORD=%s" "$WP_ADMIN_PASSWORD" "$WP_PASSWORD" > secrets/credentials.txt
+printf "WP_ADMIN_PASSWORD=%s\nWP_PASSWORD=%s\nWP_ADMIN_USER=super\nWP_ADMIN_EMAIL=super@123.com\nWP_USER=sam\nWP_EMAIL=sam@123.com\nWP_ROLE=editor" "$WP_ADMIN_PASSWORD" "$WP_PASSWORD" > secrets/credentials.txt
 printf "%s" "$DB_PASSWORD" > secrets/db_password.txt
 printf "%s" "$DB_ROOT_PASSWORD" > secrets/db_root_password.txt
 
