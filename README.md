@@ -2,7 +2,7 @@
 
 # Inception
 
-A system administration project introducing Docker, virtualization, and infrastructure design. The goal of this project is to build a secure, multi-container Web infrastructure using **Docker Compose** on Alpine Linux.
+A system administration project introducing Docker, virtualization, and infrastructure design. The goal of this project is to build a secure, multi-container Web infrastructure using **Docker Compose** on Debian Bookworm.
 
 ---
 
@@ -17,7 +17,7 @@ The architecture consists of:
 
 ### Design Choices
 1.  **Strict Microservice Separation:** Each container runs a single, dedicated daemon process (no multi-service orchestration tools like `systemd` or `supervisord`).
-2.  **Alpine Linux Base:** All custom images are built using Alpine Linux (`alpine:3.18` or `alpine:3.19`) for its light storage footprint, security-focused library structure, and speed.
+2.  **Debian (Bookworm) Base:** All custom images are built using Debian Bookworm (`debian:bookworm-slim`) for stability, packaging security, and lightweight container footprints.
 3.  **Automatic, Safe Credential Provisioning:** Credentials and environment files are generated dynamically on first build using a dedicated `./setup.sh` script, avoiding the bad practice of storing keys in the source repository.
 4.  **Least-Privilege Mounts:** Passwords are not passed to containers as environment variables. Instead, they are mounted strictly using Docker Secrets as transient files.
 
@@ -105,7 +105,7 @@ The architecture consists of:
 ## Resources
 
 *   [Docker Documentation](https://docs.docker.com/)
-*   [Alpine Linux packages](https://pkgs.alpinelinux.org/packages)
+*   [Debian packages](https://packages.debian.org/stable/)
 *   [NGINX SSL/TLS configuration](https://nginx.org/en/docs/http/configuring_https_servers.html)
 *   [WordPress Command Line Interface (WP-CLI)](https://wp-cli.org/)
 
