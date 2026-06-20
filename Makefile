@@ -5,7 +5,12 @@ DATA_DIR	= ~/data
 SECRETS_DIR = secrets
 ENV_DIR		= srcs/.env
 
-all: up
+all: secrets up
+	
+secrets: 
+	@if [ ! -f $(ENV_DIR) ] || [ ! -d $(SECRETS_DIR) ]; then \
+		bash ./setup.sh; \
+	fi
 
 up:
 	@mkdir -p $(DATA_DIR)/database
@@ -27,4 +32,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all up down clean fclean re
+.PHONY: all secrets up down clean fclean re
