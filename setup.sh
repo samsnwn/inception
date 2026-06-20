@@ -1,10 +1,16 @@
 #!/bin/bash
 
-echo "🚀 Generating secrets and .env file for Inception..."
+echo "🚀 Generating secure random passwords and .env file for Inception..."
+
+# Generate random passwords
+WP_ADMIN_PASSWORD=$(openssl rand -base64 12)
+WP_PASSWORD=$(openssl rand -base64 12)
+DB_PASSWORD=$(openssl rand -base64 12)
+DB_ROOT_PASSWORD=$(openssl rand -base64 12)
 
 # 1. Create the .env file in the srcs/ directory
 mkdir -p srcs
-cat << 'EOF' > srcs/.env
+cat << EOF > srcs/.env
 DB_NAME=mydb
 DB_USER=sam
 DB_HOST=mariadb
@@ -32,9 +38,16 @@ EOF
 # 2. Create the secrets directory and the password files
 mkdir -p secrets
 
-printf "WP_ADMIN_PASSWORD=123\nWP_PASSWORD=abc" > secrets/credentials.txt
-printf "abc" > secrets/db_password.txt
-printf "123" > secrets/db_root_password.txt
+printf "WP_ADMIN_PASSWORD=%s\nWP_PASSWORD=%s" "$WP_ADMIN_PASSWORD" "$WP_PASSWORD" > secrets/credentials.txt
+printf "%s" "$DB_PASSWORD" > secrets/db_password.txt
+printf "%s" "$DB_ROOT_PASSWORD" > secrets/db_root_password.txt
 
 echo "✅ Successfully created srcs/.env and secrets/ files!"
+echo ""
+echo "⚠️  IMPORTANT: Save these generated passwords for your evaluation ⚠️"
+echo "WordPress Admin (super) Password: $WP_ADMIN_PASSWORD"
+echo "WordPress User (sam) Password: $WP_PASSWORD"
+echo "Database Password: $DB_PASSWORD"
+echo "Database Root Password: $DB_ROOT_PASSWORD"
+echo "--------------------------------------------------------"
 echo "You can now run 'make' safely."
